@@ -19,6 +19,4 @@ echo -e "caphandshake : (2) ready to capture handhake files"
 echo -e "dos          : (3) perform a dos attack on router"
 echo -e "dosD         : Dos attack on a perticular device that is connected to an router"
 echo -e $green"btdos.py     : to dos on 2.4G bluetooth device"
-echo -e "keylogger    : It i a keylogger target URL : https://yamata.000webhostapp.com/keylogger/keyloggerIp.txt"
 echo -e "torhost      : Tor URL of  port forwording 127.0.0.1:80"
-ls $HOME/.Jarvis/commands/
