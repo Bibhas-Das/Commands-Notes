@@ -1,0 +1,8 @@
+clear
+path=$(whereis .banner|cut -d " " -f 2)
+if test $# -eq 1
+then
+	zsh $path $1
+else
+	zsh $path
+fi

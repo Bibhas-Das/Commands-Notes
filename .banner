@@ -1,0 +1,42 @@
+#//////////////// bannner ////////////////////
+user="Default"
+if test $# -eq 1
+then
+	user=$1
+else
+	user=$USER
+	firstChar=$(echo "${user:0:1}" | tr '[:lower:]' '[:upper:]')
+	capitalizedUser="${firstChar}${user:1}"
+	user=$capitalizedUser
+fi
+
+term_width=$(tput cols)
+output=$(toilet -F border -f mono12 $user)
+padding=$(echo "$output" | wc -L)
+padding=$(( (term_width - padding) / 2 ))
+while IFS= read -r line
+do
+printf "%*s\n" $((padding + ${#line})) "$line"
+done <<< "$output"|lolcat -p 5.0
+#////////////////////////////////////////////
+
+
+state=''
+
+c=$(date +%H)
+if test $c -ge 0 -a $c -lt 4;then
+	state="midnight"
+elif test $c -ge 3 -a $c -lt 12;then
+	state="morning"
+elif test $c -ge 11 -a $c -lt 14;then
+	state="noon"
+elif test $c -gt 13 -a $c -lt 18;then
+	state="afternoon"
+elif test $c -gt 17 -a $c -lt 21;then
+        state="evening"
+elif test $c -gt 20 -a $c -lt 24;then
+        state="night"
+fi
+
+echo "Good $state"
+neofetch
