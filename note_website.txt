@@ -1,0 +1,23 @@
+whois domain name  >> details of site owner
+nslookup domain.name  >> find name server (effective)
+nslook  >> non effective
+set type=ns  >> name server ip with name
+
+set type=mx  >> mail exchanger
+set type=all >> all 
+
+DNS server 
+
+server 8.8.8.8
+server 127.0.0.1
+
+
+
+Netcraft website >> information of the server.
+
+dmitry  >> deep magic information gatherring tool
+dmitry -wise -o file.txt techchip.net
+
+metagoofil >> serach hiddenn files in the website
+
+httrack >> clone a website's static elements

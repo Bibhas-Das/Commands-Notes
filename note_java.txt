@@ -1,0 +1,6 @@
+sudo pacman -S dex2jar
+ d2j-dex2jar classes.dex  
+
+ sudo pacman -S jd-gui 
+jd-gui  -> select *.jar file
+

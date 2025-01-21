@@ -1,0 +1,7 @@
+sudo dd if=/dev/sdb1 of=Documents/sundisk.img bs=1K conv=noerror,sync status=progress
+foremost -t jpg,png -v -i ~/Documents/sundisk.img -o img/ 
+
+
+sudo pacman -S clamav
+sudo freshclam
+clamscan -r ~/
