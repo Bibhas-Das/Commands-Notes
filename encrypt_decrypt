@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# Function to print usage instructions
+print_usage() {
+    echo "Usage: $0 <encrypt|decrypt> <folder_path> <password>"
+    exit 1
+}
+
+# Check if the correct number of arguments is provided
+if [ $# -ne 3 ]; then
+    print_usage
+fi
+
+# Assign command-line arguments to variables
+ACTION=$1
+FOLDER=$2
+PASSWORD=$3
+
+# Check if the folder exists
+if [ ! -d "$FOLDER" ]; then
+    echo "Error: Folder '$FOLDER' does not exist."
+    exit 1
+fi
+
+# Perform encryption or decryption
+if [ "$ACTION" == "encrypt" ]; then
+    echo "Starting encryption process..."
+    for file in "$FOLDER"/*; do
+        # Skip if it is not a regular file
+        if [ ! -f "$file" ]; then
+            continue
+        fi
+
+        # Get the filename and create the encrypted filename
+        filename=$(basename "$file")
+        encrypted_file="$file.enc"
+
+        # Encrypt the file
+        openssl enc -aes-256-cbc -salt -pbkdf2 -in "$file" -out "$encrypted_file" -k "$PASSWORD"
+        
+        # Check if the encryption succeeded
+        if [ $? -eq 0 ]; then
+            echo "Encrypted: $filename -> $encrypted_file"
+        else
+            echo "Failed to encrypt: $filename"
+        fi
+    done
+    echo "Encryption process completed."
+
+elif [ "$ACTION" == "decrypt" ]; then
+    echo "Starting decryption process..."
+    for file in "$FOLDER"/*.enc; do
+        # Skip if it is not a regular file
+        if [ ! -f "$file" ]; then
+            continue
+        fi
+
+        # Get the original filename by removing the ".enc" extension
+        original_file="${file%.enc}"
+
+        # Decrypt the file
+        openssl enc -aes-256-cbc -d -salt -pbkdf2 -in "$file" -out "$original_file" -k "$PASSWORD"
+        
+        # Check if the decryption succeeded
+        if [ $? -eq 0 ]; then
+            echo "Decrypted: $file -> $original_file"
+        else
+            echo "Failed to decrypt: $file"
+        fi
+    done
+    echo "Decryption process completed."
+
+else
+    echo "Error: Invalid action '$ACTION'. Use 'encrypt' or 'decrypt'."
+    print_usage
+fi
